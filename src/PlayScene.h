@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Button.h"
 #include "Label.h"
+#include "ship.h"
 
 class PlayScene : public Scene
 {
@@ -28,13 +29,24 @@ private:
 	glm::vec2 m_mousePosition;
 
 	Plane* m_pPlaneSprite;
-	Player* m_pPlayer;
+	Ship* m_pPlayer;
 	bool m_playerFacingRight;
 
 	// UI Items
 	Button* m_pBackButton;
 	Button* m_pNextButton;
 	Label* m_pInstructionsLabel;
+
+	//A1 Variables
+	float Xi;
+	float Yi;
+	float angle;
+	float mass;
+	float g;
+	float Vi;
+	float Xv;
+	float Xy;
+	float targetRange;
 };
 
 #endif /* defined (__PLAY_SCENE__) */
