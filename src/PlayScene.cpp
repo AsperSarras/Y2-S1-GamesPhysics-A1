@@ -31,6 +31,7 @@ void PlayScene::update()
 
 	//Initial Positions
 	m_pPlayer->getTransform()->position = glm::vec2(Xi, Yi);
+	m_pWo->getTransform()->position = glm::vec2(Xi, Yi);
 
 	//Other Variables
 	//V = 95;
@@ -52,8 +53,8 @@ void PlayScene::update()
 	Vy = V * -1 * sin(angle);
 	
 	//Player Line Trayectory
-	m_pPlayer->setvX(Vx);
-	m_pPlayer->setvY(Vy);
+	m_pWo->setvX(Vx);
+	m_pWo->setvY(Vy);
 
 	//Cooldown
 	cd += T;
@@ -76,12 +77,22 @@ void PlayScene::update()
 		}
 	}
 
+	//Launch
 	if (launch == true)
 	{
 		m_pPlayer->getTransform()->position.x += Vx * T;
 		m_pPlayer->getTransform()->position.y += Vy * T + 0.5 * g * powf(T, 2);
 	}
 
+	//Granade Stop
+	if (m_pPlayer->getTransform()->position.y > Yi)
+	{
+		m_pPlayer->getTransform()->position = m_pSt->getTransform()->position;
+	}
+	
+	updateDisplayList();
+
+	//cout << t1 <<endl;
 
 }
 
@@ -101,20 +112,19 @@ void PlayScene::start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
-
-
-	m_pPlayer = new Ship();
-	addChild(m_pPlayer);
-
-	m_pSt = new Ship();
+	m_pSt = new Ship("../Assets/textures/ship3.png", "ship");
 	addChild(m_pSt);
 	m_pSt->getTransform()->position = glm::vec2(Xi + targetRange, Yi);
 
-	///* Instructions Label */
-	//m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
-	//m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 500.0f);
+	m_pPlayer = new Ship("../Assets/textures/mine.png","Granade");
+	addChild(m_pPlayer);
 
-	//addChild(m_pInstructionsLabel);
+	m_pWo = new Ship("../Assets/textures/ship3.png", "ship");
+	addChild(m_pWo);
+
+	m_pInstructionsLabel = new Label("Press Space bar to launch/reset", "Consolas");
+	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 50.0f);
+	addChild(m_pInstructionsLabel);
 
 	ImGuiWindowFrame::Instance().setGUIFunction(std::bind(&PlayScene::GUI_Function, this));
 }
@@ -139,16 +149,19 @@ void PlayScene::GUI_Function()
 	if (ImGui::SliderFloat("Starting X", &Xi, 0.0f, 800.0f, "%.3f"))
 	{
 		m_pPlayer->getTransform()->position.x = Xi;
+		m_pWo->getTransform()->position.x = Xi;
 		m_pSt->getTransform()->position.x = Xi + targetRange;
 	}
 	if (ImGui::SliderFloat("Starting Y", &Yi, 0.0f, 600.0f, "%.3f"))
 	{
 		m_pPlayer->getTransform()->position.y = Yi;
+		m_pWo->getTransform()->position.y = Yi;
+		m_pSt->getTransform()->position.y = Yi;
 	}
-	//if (ImGui::SliderFloat("Launch Elevation Angle", &launchElevationAngle, 0.0f, 360.0f, "%.3f"))
-	//{
-	//	m_pPlayer->setCurrentHeading(launchElevationAngle * -1);
-	//}
+	if (ImGui::SliderFloat("Target Range", &targetRange, 35.0f, 800.0f, "%.3f"))
+	{
+		m_pSt->getTransform()->position.x = Xi + targetRange;
+	}
 	ImGui::SliderFloat("Launch Speed", &V, 70.0f, 300.0f, "%.3f");
 	ImGui::SliderFloat("Acceleration Gravity", &g, -100.0f, 100.0f, "%.3f");
 

@@ -3,14 +3,16 @@
 #define __SHIP__
 
 #include "TextureManager.h"
+#include <iostream>
 #include <glm/vec4.hpp>
 
 #include "Agent.h"
+#include <string>
 
 class Ship final : public Agent
 {
 public:
-	Ship();
+	Ship(std::string texture, std::string k);
 	~Ship();
 
 	// Inherited via GameObject
@@ -42,6 +44,8 @@ private:
 
 	float m_maxSpeed;
 	float m_turnRate;
+	
+	std::string m_Texture, m_key;
 
 	//A2
 	float vX;

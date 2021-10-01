@@ -30,6 +30,7 @@ private:
 
 	Plane* m_pPlaneSprite;
 	Ship* m_pPlayer;
+	Ship* m_pWo;
 	Ship* m_pSt;
 	bool m_playerFacingRight;
 

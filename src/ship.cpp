@@ -4,11 +4,17 @@
 #include "TextureManager.h"
 #include "Util.h"
 
-Ship::Ship() : m_maxSpeed(10.0f)
+Ship::Ship(std::string texture,std::string k) : m_maxSpeed(10.0f)
 {
-	TextureManager::Instance().load("../Assets/textures/ship3.png", "ship");
+	TextureManager::Instance().load(texture, k);
 
-	auto size = TextureManager::Instance().getTextureSize("ship");
+	m_Texture = texture;
+	m_key = k;
+
+	auto size = TextureManager::Instance().getTextureSize(k);
+	//TextureManager::Instance().load("../Assets/textures/ship3.png", "ship");
+
+	//auto size = TextureManager::Instance().getTextureSize("ship");
 	setWidth(size.x);
 	setHeight(size.y);
 
@@ -37,7 +43,7 @@ void Ship::draw()
 	const auto y = getTransform()->position.y;
 
 	// draw the ship
-	TextureManager::Instance().draw("ship", x, y, getCurrentHeading(), 255, true);
+	TextureManager::Instance().draw(m_key, x, y, getCurrentHeading(), 255, true);
 
 	// draw LOS
 	//Util::DrawLine(getTransform()->position, getTransform()->position + getCurrentDirection() * getLOSDistance(), getLOSColour());
