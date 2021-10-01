@@ -40,7 +40,9 @@ void Ship::draw()
 	TextureManager::Instance().draw("ship", x, y, getCurrentHeading(), 255, true);
 
 	// draw LOS
-	Util::DrawLine(getTransform()->position, getTransform()->position + getCurrentDirection() * getLOSDistance(), getLOSColour());
+	//Util::DrawLine(getTransform()->position, getTransform()->position + getCurrentDirection() * getLOSDistance(), getLOSColour());
+	Util::DrawLine(getTransform()->position, getTransform()->position + finalPosition(getvX(), getvY()), getLOSColour());
+
 }
 
 
@@ -93,9 +95,34 @@ float Ship::getMaxSpeed() const
 	return m_maxSpeed;
 }
 
+float Ship::getvX() const
+{
+	return vX;
+}
+
+float Ship::getvY() const
+{
+	return vY;
+}
+
 void Ship::setMaxSpeed(float newSpeed)
 {
 	m_maxSpeed = newSpeed;
+}
+
+void Ship::setvX(float X)
+{
+	vX = X;
+}
+
+void Ship::setvY(float Y)
+{
+	vY = Y;
+}
+
+glm::vec2 Ship::finalPosition(float a, float b)
+{
+	return glm::vec2(a, b);
 }
 
 void Ship::m_checkBounds()

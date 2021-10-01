@@ -38,15 +38,21 @@ private:
 	Label* m_pInstructionsLabel;
 
 	//A1 Variables
-	float Xi;
-	float Yi;
-	float angle;
+	float Xi; //
+	float Yi; //
+	float angle; //
 	float mass;
-	float g;
-	float Vi;
-	float Xv;
-	float Xy;
-	float targetRange;
+	float g = 9.8f; //
+	float V; //
+	float Vx; //
+	float Vy; //
+	float targetRange; //
+	float Tf = 0.016f; //
+	float Ti = 0.0f; //
+	float T; //
+
+	float cd;
+	bool launch = false;
 };
 
 #endif /* defined (__PLAY_SCENE__) */

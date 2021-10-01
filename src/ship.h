@@ -27,9 +27,14 @@ public:
 
 	// getters
 	float getMaxSpeed() const;
+	float getvX() const;
+	float getvY() const;
+	glm::vec2 finalPosition(float a, float b);
 
 	// setters
 	void setMaxSpeed(float newSpeed);
+	void setvX(float vX);
+	void setvY(float vy);
 
 private:
 	void m_checkBounds();
@@ -37,6 +42,10 @@ private:
 
 	float m_maxSpeed;
 	float m_turnRate;
+
+	//A2
+	float vX;
+	float vY;
 
 };
 

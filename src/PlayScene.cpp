@@ -8,6 +8,9 @@
 #include "Renderer.h"
 #include "Util.h"
 
+#include<iostream>
+using namespace std;
+
 PlayScene::PlayScene()
 {
 	PlayScene::start();
@@ -30,6 +33,57 @@ void PlayScene::update()
 	Xi = 100.0f;
 	Yi = 500.0f;
 	m_pPlayer->getTransform()->position = glm::vec2(Xi, Yi);
+
+	//Other Variables
+	V = 95;
+	targetRange = 485.0f;
+	T += Tf - Ti;
+	
+	//Angle 
+	angle = ((asin((targetRange * g) / powf(V, 2)) / 2));
+	//angle = ((targetRange * g) / powf(V, 2));
+	//angle = asin(angle);
+	//angle = angle * 180.f / 3.14f;
+	//angle = angle / 2;
+	
+	//angle = angle * 3.14f / 180.f;
+
+	//cout << angle << endl;
+
+	Vx = V * cos(angle);
+	Vy = V * -1 * sin(angle);
+	
+	//Player Line Trayectory
+	m_pPlayer->setvX(Vx);
+	m_pPlayer->setvY(Vy);
+
+	//Cooldown
+	cd += T;
+
+	//Launch
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_SPACE))
+	{
+		if (launch == false && cd > 1)
+		{
+			T = 0;
+			launch = true;
+			cd = 0;
+		}
+		else if (launch == true && cd > 1)
+		{
+			T = 0;
+			m_pPlayer->getTransform()->position = glm::vec2(Xi, Yi);
+			launch = false;
+			cd = 0;
+		}
+	}
+
+	if (launch == true)
+	{
+		m_pPlayer->getTransform()->position.x += Vx * T;
+		m_pPlayer->getTransform()->position.y += Vy * T + 0.5 * g * powf(T, 2);
+	}
+
 
 }
 
