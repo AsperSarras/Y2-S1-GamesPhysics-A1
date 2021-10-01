@@ -23,13 +23,14 @@ public:
 	virtual void start() override;
 private:
 	// IMGUI Function
-	void GUI_Function() const;
+	void GUI_Function();
 	std::string m_guiTitle;
 	
 	glm::vec2 m_mousePosition;
 
 	Plane* m_pPlaneSprite;
 	Ship* m_pPlayer;
+	Ship* m_pSt;
 	bool m_playerFacingRight;
 
 	// UI Items
@@ -38,15 +39,15 @@ private:
 	Label* m_pInstructionsLabel;
 
 	//A1 Variables
-	float Xi; //
-	float Yi; //
+	float Xi = 50.0f; //
+	float Yi = 500.0f; //
 	float angle; //
 	float mass;
 	float g = 9.8f; //
-	float V; //
+	float V = 95.0f; //
 	float Vx; //
 	float Vy; //
-	float targetRange; //
+	float targetRange = 485.0f; //
 	float Tf = 0.016f; //
 	float Ti = 0.0f; //
 	float T; //

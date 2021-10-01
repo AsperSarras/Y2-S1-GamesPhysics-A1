@@ -30,13 +30,11 @@ void PlayScene::update()
 	updateDisplayList();
 
 	//Initial Positions
-	Xi = 100.0f;
-	Yi = 500.0f;
 	m_pPlayer->getTransform()->position = glm::vec2(Xi, Yi);
 
 	//Other Variables
-	V = 95;
-	targetRange = 485.0f;
+	//V = 95;
+	//targetRange = 485.0f;000
 	T += Tf - Ti;
 	
 	//Angle 
@@ -108,6 +106,9 @@ void PlayScene::start()
 	m_pPlayer = new Ship();
 	addChild(m_pPlayer);
 
+	m_pSt = new Ship();
+	addChild(m_pSt);
+	m_pSt->getTransform()->position = glm::vec2(Xi + targetRange, Yi);
 
 	///* Instructions Label */
 	//m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
@@ -118,7 +119,7 @@ void PlayScene::start()
 	ImGuiWindowFrame::Instance().setGUIFunction(std::bind(&PlayScene::GUI_Function, this));
 }
 
-void PlayScene::GUI_Function() const
+void PlayScene::GUI_Function()
 {
 	// Always open with a NewFrame
 	ImGui::NewFrame();
@@ -128,21 +129,37 @@ void PlayScene::GUI_Function() const
 	
 	ImGui::Begin("Your Window Title Goes Here", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
 
-	if(ImGui::Button("My Button"))
-	{
-		std::cout << "My Button Pressed" << std::endl;
-	}
+	//if(ImGui::Button("My Button"))
+	//{
+	//	std::cout << "My Button Pressed" << std::endl;
+	//}
 
-	ImGui::Separator();
+	//ImGui::Separator();
 
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
+	if (ImGui::SliderFloat("Starting X", &Xi, 0.0f, 800.0f, "%.3f"))
 	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
-		std::cout << "---------------------------\n";
+		m_pPlayer->getTransform()->position.x = Xi;
+		m_pSt->getTransform()->position.x = Xi + targetRange;
 	}
+	if (ImGui::SliderFloat("Starting Y", &Yi, 0.0f, 600.0f, "%.3f"))
+	{
+		m_pPlayer->getTransform()->position.y = Yi;
+	}
+	//if (ImGui::SliderFloat("Launch Elevation Angle", &launchElevationAngle, 0.0f, 360.0f, "%.3f"))
+	//{
+	//	m_pPlayer->setCurrentHeading(launchElevationAngle * -1);
+	//}
+	ImGui::SliderFloat("Launch Speed", &V, 70.0f, 300.0f, "%.3f");
+	ImGui::SliderFloat("Acceleration Gravity", &g, -100.0f, 100.0f, "%.3f");
+
+	//static float float3[3] = { 0.0f, 1.0f, 1.5f };
+	//if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
+	//{
+	//	std::cout << float3[0] << std::endl;
+	//	std::cout << float3[1] << std::endl;
+	//	std::cout << float3[2] << std::endl;
+	//	std::cout << "---------------------------\n";
+	//}
 	
 	ImGui::End();
 }
