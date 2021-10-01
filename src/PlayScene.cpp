@@ -14,6 +14,10 @@ using namespace std;
 PlayScene::PlayScene()
 {
 	PlayScene::start();
+	SoundManager::Instance().load("../Assets/audio/Bgm.mp3", "Bgm", SOUND_MUSIC);
+	SoundManager::Instance().setMusicVolume(30);
+	SoundManager::Instance().playMusic("Bgm", -1, 0);
+
 }
 
 PlayScene::~PlayScene()
@@ -112,14 +116,18 @@ void PlayScene::start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
-	m_pSt = new Ship("../Assets/textures/ship3.png", "ship");
+	m_pBg = new Ship("../Assets/textures/Bg.png", "Bg");
+	addChild(m_pBg);
+	m_pBg->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, Config::SCREEN_HEIGHT * 0.525f);
+
+	m_pSt = new Ship("../Assets/textures/St.png", "St");
 	addChild(m_pSt);
 	m_pSt->getTransform()->position = glm::vec2(Xi + targetRange, Yi);
 
-	m_pPlayer = new Ship("../Assets/textures/mine.png","Granade");
+	m_pPlayer = new Ship("../Assets/textures/Th.png","Th");
 	addChild(m_pPlayer);
 
-	m_pWo = new Ship("../Assets/textures/ship3.png", "ship");
+	m_pWo = new Ship("../Assets/textures/Woo.png", "Wo");
 	addChild(m_pWo);
 
 	m_pInstructionsLabel = new Label("Press Space bar to launch/reset", "Consolas");

@@ -28,7 +28,8 @@ private:
 	
 	glm::vec2 m_mousePosition;
 
-	Plane* m_pPlaneSprite;
+	Ship* m_pBg;
+
 	Ship* m_pPlayer;
 	Ship* m_pWo;
 	Ship* m_pSt;
