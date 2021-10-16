@@ -43,7 +43,7 @@ private:
 	void m_reset();
 
 	float m_maxSpeed;
-	float m_turnRate;
+	float m_turnRate;	
 	
 	std::string m_Texture, m_key;
 

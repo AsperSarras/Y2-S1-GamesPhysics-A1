@@ -30,6 +30,7 @@ Ship::Ship(std::string texture,std::string k) : m_maxSpeed(10.0f)
 
 	setLOSDistance(400.0f); // 5 ppf x 80 feet
 	setLOSColour(glm::vec4(1, 0, 0, 1));
+	
 }
 
 

@@ -41,11 +41,11 @@ private:
 	Label* m_pInstructionsLabel;
 
 	//A1 Variables
-	float Xi = 50.0f; //
-	float Yi = 500.0f; //
+	float Xi; //
+	float Yi; //
 	float angle; //
-	float mass;
-	float g = 9.8f; //
+	//float mass;
+	//float g = 9.8f * 50.0f; //
 	float V = 95.0f; //
 	float Vx; //
 	float Vy; //
@@ -54,8 +54,43 @@ private:
 	float Ti = 0.0f; //
 	float T; //
 
+	//A2 Variables
+	float scale = 50.0f;
+	float mass = 12.8f;
+	float g = 9.8f * scale;
+	float mg = mass*g;
+	float rampRise = 3.0f * scale;
+	float rampRun = 4.0f * scale;
+	float rampPosX = 100;
+	float groundPos = 500;
+	float kFriction = 0.42f;
+
+	//Ramp
+	float rampLenght;
+	float rampAngle;
+	float netForceX;
+	float netForceY;
+	float accelX;
+	float accelY;
+
+	
+	//Ground
+	float frictionForce;
+	float timeGround;
+	float ininitialVelocityFloor;
+	float newX;
+	float accelXGround;
+	float netForceXGround;
+	float netForceYGround;
+	float timeToStop;
+	float distanceToStop;
+
+	float ax;
+
 	float cd;
 	bool launch = false;
+	bool ground = false;
+	bool stop = false;
 };
 
 #endif /* defined (__PLAY_SCENE__) */
